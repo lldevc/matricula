@@ -35,11 +35,19 @@ pipeline {
             }
         }
 
+        stage('Clean') {
+    	steps{
+    	echo "------------>Clean<------------"
+    		sh 'chmod +x ./inscripcion-ms/gradlew'
+			sh './inscripcion-ms/gradlew --b ./inscripcion-ms/build.gradle clean'
+    	}
+    }
+
         stage('Compile & Unit Tests') {
             steps{
                 echo "------------>Compile & Unit Tests<------------"
-                sh 'chmod +x gradlew'
-                sh './gradlew --b ./build.gradle test'
+                sh 'chmod +x ./inscripcion-ms/gradlew'
+                sh './inscripcion-ms/gradlew --b ./inscripcion-ms/build.gradle test'
             }
         }
 
@@ -58,7 +66,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "------------>Build<------------"
-                sh './gradlew --b ./build.gradle build -x test'
+                sh './inscripcion-ms/gradlew --b ./inscripcion-ms/build.gradle build -x test'
             }
         }
     }
