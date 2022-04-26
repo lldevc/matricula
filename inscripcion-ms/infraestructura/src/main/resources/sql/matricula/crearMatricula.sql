@@ -1,0 +1,2 @@
+INSERT INTO matricula(valor, recargo, estado, fecha_creacion, fecha_limite_pago_sin_recargo, fecha_maxima_pago, programa_id, usuario_id)
+VALUES(:valor, :recargo, :estado, :fechaCreacion, :fechaLimitePagoSinRecargo, :fechaMaximaPago, :programaId, :usuarioId);

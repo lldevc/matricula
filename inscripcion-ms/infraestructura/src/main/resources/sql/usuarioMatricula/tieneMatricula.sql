@@ -1,0 +1,1 @@
+select count(1) from matricula as m INNER JOIN programa as p on (m.programa_id = p.id) where m.usuario_id = :id  and p.nombre = :nombre;

@@ -1,0 +1,1 @@
+insert into usuario (nombre, numero_identificacion, email, ciudad, direccion) values (:nombre, :numeroIdentificacion, :email, :ciudad, :direccion)
