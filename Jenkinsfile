@@ -75,6 +75,7 @@ pipeline {
         success {
             echo 'This will run only if successful'
             junit 'inscripcion-ms/dominio/build/test-results/test/*.xml'
+            junit 'inscripcion-ms/infraestructura/build/test-results/test/*.xml'
         }
         failure {
             echo 'This will run only if failed'
