@@ -55,7 +55,7 @@ pipeline {
             steps{
                 echo '------------>Análisis de código estático<------------'
                 sonarqubeMasQualityGatesP(sonarKey:'co.com.ceiba.adn:matricula-luis.morales',
-                    sonarName:'CeibaADN-Matricula(luis.morales)',
+                    sonarName:'"CeibaADN-Matricula(luis.morales)"',
                     sonarPathProperties:'./sonar-project.properties')
             }
         }
