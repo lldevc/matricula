@@ -48,19 +48,4 @@ public class UsuarioMatricula implements Serializable {
         this.fechaSancion = null;
     }
 
-    public UsuarioMatricula(Long id, Long numeroIdentificacion, String nombre, String email, String ciudad, String direccion, LocalDateTime fechaSancion) {
-        validarObligatorio(numeroIdentificacion, SE_DEBE_INGRESAR_EL_NUMERO_DE_IDENTIFICACION_DE_USUARIO);
-        validarObligatorio(nombre, SE_DEBE_INGRESAR_EL_NOMBRE_DE_USUARIO);
-        validarObligatorio(email, SE_DEBE_INGRESAR_EL_EMAIL_DE_USUARIO);
-        validarRegex(email, "([\\w\\.\\-]+)@([\\w\\-]+)((\\.(\\w){2,3})+)", EMAIL_INGRESADO_INVALIDO);
-
-        this.id = id;
-        this.numeroIdentificacion = numeroIdentificacion;
-        this.nombre = nombre;
-        this.email = email;
-        this.ciudad = ciudad;
-        this.direccion = direccion;
-        this.fechaSancion = fechaSancion;
-    }
-
 }
