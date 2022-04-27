@@ -85,4 +85,13 @@ class ComandoControladorMatriculaTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    @DisplayName("Deberia actualizar el cron la matricula")
+    void cronMatricula() throws Exception{
+        // arrange - act - assert
+        mocMvc.perform(put("/matriculas/cron")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
 }

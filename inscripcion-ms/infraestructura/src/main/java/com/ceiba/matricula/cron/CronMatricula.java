@@ -1,4 +1,4 @@
-package com.ceiba.cron;
+package com.ceiba.matricula.cron;
 
 import com.ceiba.matricula.consulta.manejador.ManejadorActualizarMatricula;
 import org.springframework.beans.factory.annotation.Autowired;
