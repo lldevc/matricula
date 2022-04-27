@@ -2,6 +2,7 @@ package com.ceiba.matricula.comando;
 
 import com.ceiba.matricula.modelo.entidad.EstadoDePago;
 import com.ceiba.matricula.modelo.entidad.Programa;
+import com.ceiba.matricula.modelo.entidad.TarjetaDeCredito;
 import com.ceiba.matricula.modelo.entidad.UsuarioMatricula;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,5 +26,5 @@ public class ComandoMatricula {
     private LocalDateTime fechaMaximaPago;
     private Programa programa;
     private UsuarioMatricula usuarioMatricula;
-    private ComandoTargetaDeCredito medioDePago;
+    private TarjetaDeCredito medioDePago;
 }
