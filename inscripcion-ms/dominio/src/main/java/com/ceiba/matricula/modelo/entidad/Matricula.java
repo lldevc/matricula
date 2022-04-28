@@ -101,15 +101,13 @@ public class Matricula {
         int diasASumar = 1;         //Empieza en 1 porque los dias empiezan a contar al siguiente dia habil desde la fecha de inscripcion
         DayOfWeek dia;
 
-        if (esDiaNoHabil(fecha) || fecha.getDayOfWeek().toString().equals("FRIDAY")){
+        if (esDiaNoHabil(fecha) || "FRIDAY".equals(fecha.getDayOfWeek().toString()) ){
             dia = fecha.getDayOfWeek();
-            if ((dia.toString().equals("SUNDAY"))){
-                diasASumar = 1;
-            }
-            else if((dia.toString().equals("SATURDAY"))){
-                diasASumar = 2;
-            } else {
+            if ("FRIDAY".equals(dia.toString())){
                 diasASumar = 3;
+            }
+            else if("SATURDAY".equals(dia.toString())){
+                diasASumar = 2;
             }
         }
 
@@ -126,6 +124,6 @@ public class Matricula {
 
     private boolean esDiaNoHabil(LocalDateTime fecha){
         DayOfWeek dia = fecha.getDayOfWeek();
-        return dia.toString().equals("SATURDAY") || dia.toString().equals("SUNDAY");
+        return "SATURDAY".equals(dia.toString()) || "SUNDAY".equals(dia.toString());
     }
 }

@@ -4,7 +4,6 @@ package com.ceiba.matricula.modelo.entidad;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import static com.ceiba.dominio.ValidadorArgumento.*;

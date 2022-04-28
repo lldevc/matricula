@@ -44,14 +44,13 @@ public class ServicioActualizarEstadoMatricula {
                 this.repositorioUsuarioMatricula.actualizar(matricula.getUsuarioMatricula());
                 this.repositorioMatricula.actualizar(matricula);
 
-            } else if (fechaPagoVencida && !vencida) {
-                if(!matricula.isRecargo()) {
-                    matricula.setRecargo(true);
-                    Double valorRecargo = matricula.getPrograma().calcularRecargo();
-                    Double nuevoValor = matricula.getValor() + valorRecargo;
-                    matricula.setValor(nuevoValor);
-                    this.repositorioMatricula.actualizar(matricula);
-                }
+            } else if (fechaPagoVencida && !vencida && !matricula.isRecargo()) {
+
+                matricula.setRecargo(true);
+                Double valorRecargo = matricula.getPrograma().calcularRecargo();
+                Double nuevoValor = matricula.getValor() + valorRecargo;
+                matricula.setValor(nuevoValor);
+                this.repositorioMatricula.actualizar(matricula);
             }
         }
     }

@@ -3,8 +3,6 @@ package com.ceiba.matricula.modelo.entidad;
 
 import lombok.Getter;
 
-import java.io.Serializable;
-
 import static com.ceiba.dominio.ValidadorArgumento.*;
 
 @Getter

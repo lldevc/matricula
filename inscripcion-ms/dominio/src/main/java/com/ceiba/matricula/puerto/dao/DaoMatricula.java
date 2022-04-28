@@ -1,7 +1,6 @@
 package com.ceiba.matricula.puerto.dao;
 
 import com.ceiba.matricula.modelo.dto.DtoMatricula;
-import com.ceiba.matricula.modelo.entidad.Matricula;
 
 import java.util.List;
 
