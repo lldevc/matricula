@@ -8,7 +8,7 @@ public interface RepositorioMatricula {
      * @param matricula
      * @return el id generado
      */
-    Long crear(Matricula matricula, Long programaId, Long usuarioId);
+    Long crear(Matricula matricula);
 
     /**
      * Permite actualizar un matricula

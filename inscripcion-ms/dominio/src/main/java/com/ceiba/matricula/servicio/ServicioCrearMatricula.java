@@ -28,7 +28,7 @@ public class ServicioCrearMatricula {
     public Long ejecutar(Matricula matricula, Long programaId, Long usuarioId) {
         validarSiEstaSancionado(usuarioId);
         validarExistenciaPrevia(matricula);
-        return this.repositorioMatricula.crear(matricula, programaId, usuarioId);
+        return this.repositorioMatricula.crear(matricula);
     }
 
     private void validarExistenciaPrevia(Matricula matricula) {

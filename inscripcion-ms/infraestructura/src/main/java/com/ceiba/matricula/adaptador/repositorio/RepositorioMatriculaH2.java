@@ -5,6 +5,8 @@ import com.ceiba.infraestructura.jdbc.sqlstatement.SqlStatement;
 import com.ceiba.matricula.modelo.entidad.Matricula;
 import com.ceiba.matricula.puerto.repositorio.RepositorioMatricula;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -35,9 +37,16 @@ public class RepositorioMatriculaH2 implements RepositorioMatricula {
     }
 
     @Override
-    public Long crear(Matricula matricula, Long programaId, Long usuarioId) {
-        String estado = matricula.getEstadoDePago().toString();
-        return this.customNamedParameterJdbcTemplate.crearMatricula(matricula, sqlCrear, programaId, usuarioId, estado);
+    public Long crear(Matricula matricula) {
+        MapSqlParameterSource paramSource = new MapSqlParameterSource();
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        paramSource.addValue("programaId", matricula.getPrograma().getId());
+        paramSource.addValue("usuarioId", matricula.getUsuarioMatricula().getId());
+        paramSource.addValue("estado", matricula.getEstadoDePago().toString());
+        this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().update(sqlCrear, paramSource,keyHolder,new String[] { "id" });
+        return keyHolder.getKey().longValue();
+
+
     }
 
     @Override

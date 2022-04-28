@@ -2,9 +2,7 @@ package com.ceiba.matricula.controlador;
 
 import com.ceiba.ComandoRespuesta;
 import com.ceiba.matricula.comando.ComandoMatricula;
-import com.ceiba.matricula.consulta.manejador.ManejadorActualizarMatricula;
-import com.ceiba.matricula.consulta.manejador.ManejadorCrearMatricula;
-import com.ceiba.matricula.consulta.manejador.ManejadorEliminarMatricula;
+import com.ceiba.matricula.consulta.manejador.*;
 import com.ceiba.matricula.cron.CronMatricula;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,17 +17,20 @@ public class ComandoControladorMatricula {
     private final ManejadorCrearMatricula manejadorCrearMatricula;
 	private final ManejadorEliminarMatricula manejadorEliminarMatricula;
 	private final ManejadorActualizarMatricula manejadorActualizarMatricula;
-	private final CronMatricula cronMatricula;
+	private final ManejadorPagarMatricula manejadorPagarMatricula;
+	private final ManejadorActualizarEstadoMatricula manejadorActualizarEstadoMatricula;
 
     @Autowired
     public ComandoControladorMatricula(ManejadorCrearMatricula manejadorCrearMatricula,
 									   ManejadorEliminarMatricula manejadorEliminarMatricula,
 									   ManejadorActualizarMatricula manejadorActualizarMatricula,
-									   CronMatricula cronMatricula) {
+									   ManejadorPagarMatricula manejadorPagarMatricula,
+									   ManejadorActualizarEstadoMatricula manejadorActualizarEstadoMatricula) {
         this.manejadorCrearMatricula = manejadorCrearMatricula;
 		this.manejadorEliminarMatricula = manejadorEliminarMatricula;
 		this.manejadorActualizarMatricula = manejadorActualizarMatricula;
-		this.cronMatricula = cronMatricula;
+		this.manejadorPagarMatricula = manejadorPagarMatricula;
+		this.manejadorActualizarEstadoMatricula = manejadorActualizarEstadoMatricula;
 	}
 
     @PostMapping
@@ -55,11 +56,12 @@ public class ComandoControladorMatricula {
 	@ApiOperation("Actualizar el estado de pago de la Matricula")
 	public void actualizarPagoMatricula(@RequestBody ComandoMatricula comandoMatricula,@PathVariable Long id) {
 		comandoMatricula.setId(id);
-		manejadorActualizarMatricula.pagarMatricula(comandoMatricula);
+		manejadorPagarMatricula.ejecutar(comandoMatricula);
 	}
+
 	@PutMapping(value="/cron")
 	@ApiOperation("Actualizar el estado de pago de la Matricula")
 	public void cronMatricula() {
-		cronMatricula.cronActualizarEstadoDeMatriculas();
+		manejadorActualizarEstadoMatricula.ejecutar();
 	}
 }
