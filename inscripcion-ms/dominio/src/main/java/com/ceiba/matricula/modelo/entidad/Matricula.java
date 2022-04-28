@@ -4,7 +4,6 @@ package com.ceiba.matricula.modelo.entidad;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -12,7 +11,7 @@ import java.util.List;
 import static com.ceiba.dominio.ValidadorArgumento.*;
 
 @Getter
-public class Matricula implements Serializable {
+public class Matricula {
 
     private static final String SE_DEBE_INGRESAR_ID = "La matricula debe tener un id";
     private static final String SE_DEBE_INGRESAR_VALOR = "La matricula debe tener un valor";

@@ -11,7 +11,7 @@ import static com.ceiba.dominio.ValidadorArgumento.*;
 
 @Getter
 @Setter
-public class UsuarioMatricula implements Serializable {
+public class UsuarioMatricula {
 
     private static final String SE_DEBE_INGRESAR_EL_NOMBRE_DE_USUARIO = "Se debe ingresar el nombre de usuario";
     private static final String SE_DEBE_INGRESAR_EL_NUMERO_DE_IDENTIFICACION_DE_USUARIO = "Se debe ingresar el numero de identificaion de usuario";

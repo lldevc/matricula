@@ -3,12 +3,10 @@ package com.ceiba.matricula.modelo.entidad;
 
 import lombok.Getter;
 
-import java.io.Serializable;
-
 import static com.ceiba.dominio.ValidadorArgumento.*;
 
 @Getter
-public class Programa implements Serializable {
+public class Programa {
 
     private static final String SE_DEBE_INGRESAR_ID = "Debe ingresar un id para el programa";
     private static final String SE_DEBE_INGRESAR_NOMBRE = "Debe ingresar un nombre para el programa";
@@ -23,6 +21,9 @@ public class Programa implements Serializable {
     private Double precio;
     private Double recargo;
     private Integer diasParaRecargo;
+
+    public Programa() {
+    }
 
     public Programa(Long id, String nombre, Double precio, Double recargo, Integer diasParaRecargo) {
         validarObligatorio(id, SE_DEBE_INGRESAR_ID);

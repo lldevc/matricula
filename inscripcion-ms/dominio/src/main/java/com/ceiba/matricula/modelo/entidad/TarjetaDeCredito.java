@@ -8,7 +8,7 @@ import java.io.Serializable;
 import static com.ceiba.dominio.ValidadorArgumento.*;
 
 @Getter
-public class TarjetaDeCredito implements Serializable {
+public class TarjetaDeCredito {
 
     private static final String SE_DEBE_INGRESAR_NUMERO_DE_TARGETA = "Debe ingresar un numero de targeta";
     private static final String SE_DEBE_INGRESAR_ANIO_VENCIMINETO_TARGETA = "Debe ingresar un año de vencimiento";
