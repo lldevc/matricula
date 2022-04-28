@@ -19,3 +19,6 @@ spring:
       password: ll1234
       hikari:
          poolName: pool
+
+cron:
+   expression: 0 * * * * *

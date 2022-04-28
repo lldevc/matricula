@@ -1,5 +1,7 @@
 package com.ceiba.configuracion;
 
+import com.ceiba.matricula.consulta.manejador.ManejadorActualizarEstadoMatricula;
+import com.ceiba.matricula.cron.CronMatricula;
 import com.ceiba.matricula.puerto.dao.DaoUsuarioMatricula;
 import com.ceiba.matricula.puerto.repositorio.RepositorioMatricula;
 import com.ceiba.matricula.puerto.repositorio.RepositorioUsuarioMatricula;

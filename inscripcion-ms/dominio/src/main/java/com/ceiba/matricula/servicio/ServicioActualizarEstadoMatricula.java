@@ -21,6 +21,7 @@ public class ServicioActualizarEstadoMatricula {
     }
 
     public void ejecutar(List<DtoMatricula> dtoMatriculas) {
+
         Matricula matricula;
         for (DtoMatricula dtoMatricula: dtoMatriculas) {
             matricula = MapperMatricula.mapperDtoMatriculaToMatricula(dtoMatricula);

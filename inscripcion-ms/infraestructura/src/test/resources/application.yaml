@@ -6,3 +6,6 @@ spring:
       password:
       hikari:
          poolName: pool
+
+cron:
+   expression: 0 * * * * *
