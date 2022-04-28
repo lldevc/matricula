@@ -8,6 +8,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+
+import static java.time.DayOfWeek.*;
 import static com.ceiba.dominio.ValidadorArgumento.*;
 
 @Getter
@@ -101,12 +103,12 @@ public class Matricula {
         int diasASumar = 1;         //Empieza en 1 porque los dias empiezan a contar al siguiente dia habil desde la fecha de inscripcion
         DayOfWeek dia;
 
-        if (esDiaNoHabil(fecha) || "FRIDAY".equals(fecha.getDayOfWeek().toString()) ){
+        if (esDiaNoHabil(fecha) || FRIDAY.toString().equals(fecha.getDayOfWeek().toString()) ){
             dia = fecha.getDayOfWeek();
-            if ("FRIDAY".equals(dia.toString())){
+            if (FRIDAY.toString().equals(dia.toString())){
                 diasASumar = 3;
             }
-            else if("SATURDAY".equals(dia.toString())){
+            else if(SATURDAY.toString().equals(dia.toString())){
                 diasASumar = 2;
             }
         }

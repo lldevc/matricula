@@ -15,14 +15,13 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MatriculaTest {
 
     @Test
-    @DisplayName("Deberia crear correctamente el usuario")
-    void deberiaCrearCorrectamenteElUsusuario() {
+    @DisplayName("Deberia crear correctamente la matricula")
+    void deberiaCrearCorrectamenteLaMatricula() {
         // arrange
         Programa programa = new ProgramaTestDataBuilder().build();
         UsuarioMatricula usuario = new UsuarioMatriculaTestDataBuilder().build();
@@ -41,6 +40,32 @@ public class MatriculaTest {
         assertFalse(matricula.isRecargo());
         assertEquals(EstadoDePago.PENDIENTE, matricula.getEstadoDePago());
         assertEquals(fechaCreacion, matricula.getFechaCreacion());
+        assertEquals(fechaLimitePagoConRecargo, matricula.getFechaLimitePagoSinRecargo());
+        assertEquals(fechaMaximaPago, matricula.getFechaMaximaPago());
+        assertEquals(usuario, matricula.getUsuarioMatricula());
+        assertEquals(programa, matricula.getPrograma());
+    }
+
+    @Test
+    @DisplayName("Deberia crear correctamente la matricula con contructor sencillo")
+    void deberiaCrearCorrectamenteLaMatriculaConElConstructorSencillo() {
+        // arrange
+        Programa programa = new ProgramaTestDataBuilder().build();
+        UsuarioMatricula usuario = new UsuarioMatriculaTestDataBuilder().build();
+        LocalDateTime fechaCreacion = LocalDateTime.now();
+        LocalDateTime fechaLimitePagoConRecargo = MatriculaTestDataBuilder.calcularFechaLimitePago(fechaCreacion, programa.getDiasParaRecargo());
+        LocalDateTime fechaMaximaPago = MatriculaTestDataBuilder.calcularFechaLimitePago(fechaCreacion, programa.getDiasParaRecargo() + 5);
+        //act
+        Matricula matricula = new MatriculaTestDataBuilder(programa, usuario)
+                .conFechaCreacion(fechaCreacion)
+                .conFechaLimitePagoConRecargo(fechaLimitePagoConRecargo)
+                .conFechaMaximaPago(fechaMaximaPago)
+                .build2();
+        //assert
+        assertNull(matricula.getId());
+        assertEquals(programa.getPrecio(), matricula.getValor());
+        assertFalse(matricula.isRecargo());
+        assertEquals(EstadoDePago.PENDIENTE, matricula.getEstadoDePago());
         assertEquals(fechaLimitePagoConRecargo, matricula.getFechaLimitePagoSinRecargo());
         assertEquals(fechaMaximaPago, matricula.getFechaMaximaPago());
         assertEquals(usuario, matricula.getUsuarioMatricula());

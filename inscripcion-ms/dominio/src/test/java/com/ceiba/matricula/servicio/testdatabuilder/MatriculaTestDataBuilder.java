@@ -83,6 +83,10 @@ public class MatriculaTestDataBuilder {
         return new Matricula(id, valor, recargo,estadoDePago, fechaCreacion, fechaLimitePagoSinRecargo, fechaMaximaPago, programa, usuarioMatricula);
     }
 
+    public Matricula build2() {
+        return new Matricula(programa, usuarioMatricula);
+    }
+
     public static LocalDateTime calcularFechaLimitePago(LocalDateTime fechaBase, Integer diasParaPagarPrograma) {
         int anio = fechaBase.getYear();
         int mes = fechaBase.getMonthValue();
