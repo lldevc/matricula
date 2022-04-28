@@ -24,9 +24,6 @@ public class Programa implements Serializable {
     private Double recargo;
     private Integer diasParaRecargo;
 
-    public Programa() {
-    }
-
     public Programa(Long id, String nombre, Double precio, Double recargo, Integer diasParaRecargo) {
         validarObligatorio(id, SE_DEBE_INGRESAR_ID);
         validarObligatorio(nombre, SE_DEBE_INGRESAR_NOMBRE);
