@@ -9,6 +9,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.Objects;
+
 @Repository
 public class RepositorioMatriculaH2 implements RepositorioMatricula {
 
@@ -50,7 +52,7 @@ public class RepositorioMatriculaH2 implements RepositorioMatricula {
         paramSource.addValue("usuarioId", matricula.getUsuarioMatricula().getId());
 
         this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().update(sqlCrear, paramSource,keyHolder,new String[] { "id" });
-        return keyHolder.getKey().longValue();
+        return Objects.requireNonNull(keyHolder.getKey()).longValue();
     }
 
     @Override
