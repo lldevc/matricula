@@ -1,5 +1,6 @@
 package com.ceiba.matricula.comando.fabrica;
 
+import com.ceiba.matricula.comando.ComandoCrearMatricula;
 import com.ceiba.matricula.comando.ComandoMatricula;
 import com.ceiba.matricula.modelo.entidad.Matricula;
 import org.springframework.stereotype.Component;
@@ -7,10 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class FabricaMatricula {
 
-    public Matricula crearPorPrimeraVez(ComandoMatricula comandoMatricula) {
+    public Matricula crear(ComandoCrearMatricula comandoCrearMatricula) {
         return new Matricula(
-                comandoMatricula.getPrograma(),
-                comandoMatricula.getUsuarioMatricula()
+                comandoCrearMatricula.getPrograma(),
+                comandoCrearMatricula.getUsuarioMatricula()
         );
     }
 

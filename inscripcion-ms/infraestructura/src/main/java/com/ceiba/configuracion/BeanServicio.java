@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 public class BeanServicio {
 
     @Bean
-    public ServicioCrearMatricula servicioCrearMatricula(RepositorioMatricula repositorioMatricula, DaoUsuarioMatricula daoUsuarioMatricula) {
-        return new ServicioCrearMatricula(repositorioMatricula, daoUsuarioMatricula);
+    public ServicioCrearMatricula servicioCrearMatricula(RepositorioMatricula repositorioMatricula, DaoUsuarioMatricula daoUsuarioMatricula, ServicioCrearUsuarioMatricula servicioCrearUsuarioMatricula) {
+        return new ServicioCrearMatricula(repositorioMatricula, daoUsuarioMatricula, servicioCrearUsuarioMatricula);
     }
 
     @Bean

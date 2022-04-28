@@ -18,15 +18,27 @@ public class ServicioCrearMatricula {
 
     private final RepositorioMatricula repositorioMatricula;
     private final DaoUsuarioMatricula daoUsuarioMatricula;
+    private final ServicioCrearUsuarioMatricula servicioCrearUsuarioMatricula;
 
 
-    public ServicioCrearMatricula(RepositorioMatricula repositorioMatricula, DaoUsuarioMatricula daoUsuarioMatricula) {
+    public ServicioCrearMatricula(RepositorioMatricula repositorioMatricula, DaoUsuarioMatricula daoUsuarioMatricula, ServicioCrearUsuarioMatricula servicioCrearUsuarioMatricula) {
         this.repositorioMatricula = repositorioMatricula;
         this.daoUsuarioMatricula = daoUsuarioMatricula;
+        this.servicioCrearUsuarioMatricula = servicioCrearUsuarioMatricula;
     }
 
-    public Long ejecutar(Matricula matricula, Long programaId, Long usuarioId) {
-        validarSiEstaSancionado(usuarioId);
+    public Long ejecutar(Matricula matricula) {
+        boolean usuarioRegistrado = servicioCrearUsuarioMatricula.validarEstaRegistrado(matricula.getUsuarioMatricula());
+        Long usuarioId;
+        if(usuarioRegistrado){
+            Long numeroIdentificacionUsuario = matricula.getUsuarioMatricula().getNumeroIdentificacion();
+            String nombreProgramaMatricula = matricula.getPrograma().getNombre();
+            usuarioId = servicioCrearUsuarioMatricula.validarSiUsuarioTieneMatricula(numeroIdentificacionUsuario, nombreProgramaMatricula);
+        } else {
+            usuarioId = servicioCrearUsuarioMatricula.ejecutar(matricula.getUsuarioMatricula());
+        }
+        matricula.getUsuarioMatricula().setId(usuarioId);
+        validarSiEstaSancionado(matricula.getUsuarioMatricula().getId());
         validarExistenciaPrevia(matricula);
         return this.repositorioMatricula.crear(matricula);
     }

@@ -1,6 +1,7 @@
 package com.ceiba.matricula.controlador;
 
 import com.ceiba.ComandoRespuesta;
+import com.ceiba.matricula.comando.ComandoCrearMatricula;
 import com.ceiba.matricula.comando.ComandoMatricula;
 import com.ceiba.matricula.consulta.manejador.*;
 import com.ceiba.matricula.cron.CronMatricula;
@@ -35,8 +36,8 @@ public class ComandoControladorMatricula {
 
     @PostMapping
     @ApiOperation("Crear Matricula")
-    public ComandoRespuesta<Long> crear(@RequestBody ComandoMatricula comandoMatricula) {
-        return manejadorCrearMatricula.ejecutar(comandoMatricula);
+    public ComandoRespuesta<Long> crear(@RequestBody ComandoCrearMatricula comandoCrearMatricula) {
+        return manejadorCrearMatricula.ejecutar(comandoCrearMatricula);
     }
 
     @DeleteMapping(value="/{id}")

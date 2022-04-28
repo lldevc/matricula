@@ -27,16 +27,6 @@ public class CustomNamedParameterJdbcTemplate {
 		this.namedParameterJdbcTemplate.update(sql, paramSource,keyHolder,new String[] { "id" });
 		return keyHolder.getKey().longValue();
 	}
-
-	public Long crearMatricula(Object object,String sql, Long programaId, Long usuarioId, String estado) {
-		MapSqlParameterSource paramSource = crearParametros(object);
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-		paramSource.addValue("programaId", programaId);
-		paramSource.addValue("usuarioId", usuarioId);
-		paramSource.addValue("estado", estado);
-		this.namedParameterJdbcTemplate.update(sql, paramSource,keyHolder,new String[] { "id" });
-		return keyHolder.getKey().longValue();
-	}
 	
 	public void actualizar(Object object,String sql) {
 		MapSqlParameterSource paramSource = crearParametros(object);

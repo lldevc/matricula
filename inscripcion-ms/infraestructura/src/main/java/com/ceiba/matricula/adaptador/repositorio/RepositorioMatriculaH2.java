@@ -40,13 +40,17 @@ public class RepositorioMatriculaH2 implements RepositorioMatricula {
     public Long crear(Matricula matricula) {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
         KeyHolder keyHolder = new GeneratedKeyHolder();
+        paramSource.addValue("valor", matricula.getValor());
+        paramSource.addValue("recargo", matricula.isRecargo());
+        paramSource.addValue("estado", matricula.getEstadoDePago().toString());
+        paramSource.addValue("fechaCreacion", matricula.getFechaCreacion());
+        paramSource.addValue("fechaLimitePagoSinRecargo", matricula.getFechaLimitePagoSinRecargo());
+        paramSource.addValue("fechaMaximaPago", matricula.getFechaMaximaPago());
         paramSource.addValue("programaId", matricula.getPrograma().getId());
         paramSource.addValue("usuarioId", matricula.getUsuarioMatricula().getId());
-        paramSource.addValue("estado", matricula.getEstadoDePago().toString());
+
         this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().update(sqlCrear, paramSource,keyHolder,new String[] { "id" });
         return keyHolder.getKey().longValue();
-
-
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.ceiba.matricula.modelo.entidad.Programa;
 import com.ceiba.matricula.modelo.entidad.UsuarioMatricula;
 import com.ceiba.matricula.puerto.dao.DaoUsuarioMatricula;
 import com.ceiba.matricula.puerto.repositorio.RepositorioMatricula;
+import com.ceiba.matricula.puerto.repositorio.RepositorioUsuarioMatricula;
 import com.ceiba.matricula.servicio.testdatabuilder.MatriculaTestDataBuilder;
 import com.ceiba.matricula.servicio.testdatabuilder.ProgramaTestDataBuilder;
 import com.ceiba.matricula.servicio.testdatabuilder.UsuarioMatriculaTestDataBuilder;
@@ -28,7 +29,9 @@ public class ServicioCrearMatriculaTest {
     UsuarioMatricula usuario;
     Matricula matricula;
     RepositorioMatricula repositorioMatricula;
+    RepositorioUsuarioMatricula repositorioUsuarioMatricula;
     DaoUsuarioMatricula daoUsuarioMatricula;
+    ServicioCrearUsuarioMatricula servicioCrearUsuarioMatricula;
 
     @BeforeEach
     void setUp() {
@@ -36,7 +39,9 @@ public class ServicioCrearMatriculaTest {
         usuario = new UsuarioMatriculaTestDataBuilder().build();
         matricula = new MatriculaTestDataBuilder(programa, usuario).conId(1L).build();
         repositorioMatricula = Mockito.mock(RepositorioMatricula.class);
+        repositorioUsuarioMatricula = Mockito.mock(RepositorioUsuarioMatricula.class);
         daoUsuarioMatricula = Mockito.mock(DaoUsuarioMatricula.class);
+        servicioCrearUsuarioMatricula  = new ServicioCrearUsuarioMatricula(repositorioUsuarioMatricula, daoUsuarioMatricula);
     }
 
     @Test
@@ -54,9 +59,9 @@ public class ServicioCrearMatriculaTest {
         );
         Mockito.when(daoUsuarioMatricula.listarPorId(Mockito.anyLong())).thenReturn(dtoUsuarioMatricula);
         Mockito.when(repositorioMatricula.existePorId(Mockito.anyLong())).thenReturn(true);
-        ServicioCrearMatricula servicioCrearMatricula = new ServicioCrearMatricula(repositorioMatricula, daoUsuarioMatricula);
+        ServicioCrearMatricula servicioCrearMatricula = new ServicioCrearMatricula(repositorioMatricula, daoUsuarioMatricula, servicioCrearUsuarioMatricula);
         // act - assert
-        BasePrueba.assertThrows(() -> servicioCrearMatricula.ejecutar(matricula, programa.getId(), usuario.getId()), ExcepcionDuplicidad.class,"El usuario ya tiene una matricula registrada para el programa de "+ matricula.getPrograma().getNombre()+" en el sistema");
+        BasePrueba.assertThrows(() -> servicioCrearMatricula.ejecutar(matricula), ExcepcionDuplicidad.class,"El usuario ya tiene una matricula registrada para el programa de "+ matricula.getPrograma().getNombre()+" en el sistema");
     }
 
     @Test
@@ -74,9 +79,9 @@ public class ServicioCrearMatriculaTest {
         );
         Mockito.when(repositorioMatricula.existePorId(Mockito.anyLong())).thenReturn(false);
         Mockito.when(daoUsuarioMatricula.listarPorId(Mockito.anyLong())).thenReturn(dtoUsuarioMatricula);
-        ServicioCrearMatricula servicioCrearMatricula = new ServicioCrearMatricula(repositorioMatricula, daoUsuarioMatricula);
+        ServicioCrearMatricula servicioCrearMatricula = new ServicioCrearMatricula(repositorioMatricula, daoUsuarioMatricula, servicioCrearUsuarioMatricula);
         // act - assert
-        BasePrueba.assertThrows(() -> servicioCrearMatricula.ejecutar(matricula, programa.getId(), usuario.getId()), ExcepcionUsuarioSancionado.class,"el aspirante esta sancionado por no pago de matricula hasta la fecha: "+dtoUsuarioMatricula.getFechaSancion().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+        BasePrueba.assertThrows(() -> servicioCrearMatricula.ejecutar(matricula), ExcepcionUsuarioSancionado.class,"el aspirante esta sancionado por no pago de matricula hasta la fecha: "+dtoUsuarioMatricula.getFechaSancion().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
     }
 
     @Test
@@ -95,12 +100,12 @@ public class ServicioCrearMatriculaTest {
         );
         Mockito.when(repositorioMatricula.existePorId(Mockito.anyLong())).thenReturn(false);
         Mockito.when(daoUsuarioMatricula.listarPorId(Mockito.anyLong())).thenReturn(dtoUsuarioMatricula);
-        Mockito.when(repositorioMatricula.crear(matricula, programa.getId(), usuario.getId())).thenReturn(10L);
-        ServicioCrearMatricula servicioCrearMatricula = new ServicioCrearMatricula(repositorioMatricula, daoUsuarioMatricula);
+        Mockito.when(repositorioMatricula.crear(matricula)).thenReturn(10L);
+        ServicioCrearMatricula servicioCrearMatricula = new ServicioCrearMatricula(repositorioMatricula, daoUsuarioMatricula, servicioCrearUsuarioMatricula);
         // act
-        Long idMatricula = servicioCrearMatricula.ejecutar(matricula, programa.getId(), usuario.getId());
+        Long idMatricula = servicioCrearMatricula.ejecutar(matricula);
         //- assert
         assertEquals(10L,idMatricula);
-        Mockito.verify(repositorioMatricula, Mockito.times(1)).crear(matricula, programa.getId(), usuario.getId());
+        Mockito.verify(repositorioMatricula, Mockito.times(1)).crear(matricula);
     }
 }
