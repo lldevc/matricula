@@ -6,9 +6,6 @@ import com.ceiba.matricula.modelo.entidad.Matricula;
 
 public class MapperMatricula {
 
-    private MapperMatricula() {
-    }
-
     public static DtoMatricula mapperMatriculaToDtoMatricula(Matricula matricula) {
         return new DtoMatricula(
                 matricula.getId(),

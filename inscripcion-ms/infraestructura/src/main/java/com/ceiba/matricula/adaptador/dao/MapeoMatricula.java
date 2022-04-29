@@ -25,21 +25,21 @@ public class MapeoMatricula implements RowMapper<DtoMatricula>, MapperResult {
         mapingEstados.put(EstadoDePago.PAGADA.toString(), EstadoDePago.PAGADA);
         mapingEstados.put(EstadoDePago.VENCIDA.toString(), EstadoDePago.VENCIDA);
 
-        Long id_programa = resultSet.getLong("id_programa");
-        String nombre_programa = resultSet.getString("nombre_programa");
-        Double precio_programa = resultSet.getDouble("precio_programa");
-        Double recargo_programa = resultSet.getDouble("recargo_programa");
-        Integer diasParaRecargo_programa = resultSet.getInt("dias_para_recargo_programa");
-        Programa programa = new Programa(id_programa, nombre_programa, precio_programa, recargo_programa, diasParaRecargo_programa);
+        Long idPrograma = resultSet.getLong("id_programa");
+        String nombrePrograma = resultSet.getString("nombre_programa");
+        Double precioPrograma = resultSet.getDouble("precio_programa");
+        Double recargoPrograma = resultSet.getDouble("recargo_programa");
+        Integer diasParaRecargoPrograma = resultSet.getInt("dias_para_recargo_programa");
+        Programa programa = new Programa(idPrograma, nombrePrograma, precioPrograma, recargoPrograma, diasParaRecargoPrograma);
 
 
-        Long id_usuario = resultSet.getLong("id_usuario");
-        Long numeroIdentificacion_usuario = resultSet.getLong("numero_identificacion");
-        String nombre_usuario = resultSet.getString("nombre_usuario");
-        String email_usuario = resultSet.getString("email_usuario");
-        String ciudad_usuario = resultSet.getString("ciudad_usuario");
-        String direccion_usuario = resultSet.getString("direccion_usuario");
-        UsuarioMatricula usuarioMatricula = new UsuarioMatricula(id_usuario, numeroIdentificacion_usuario, nombre_usuario, email_usuario, ciudad_usuario, direccion_usuario);
+        Long idUsuario = resultSet.getLong("id_usuario");
+        Long numeroIdentificacionUsuario = resultSet.getLong("numero_identificacion");
+        String nombreUsuario = resultSet.getString("nombre_usuario");
+        String emailUsuario = resultSet.getString("email_usuario");
+        String ciudadUsuario = resultSet.getString("ciudad_usuario");
+        String direccionUsuario = resultSet.getString("direccion_usuario");
+        UsuarioMatricula usuarioMatricula = new UsuarioMatricula(idUsuario, numeroIdentificacionUsuario, nombreUsuario, emailUsuario, ciudadUsuario, direccionUsuario);
 
 
 
