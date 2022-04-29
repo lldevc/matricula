@@ -52,8 +52,11 @@ public class MapeoMatricula implements RowMapper<DtoMatricula>, MapperResult {
         LocalDateTime fechaMaximaPago = resultSet.getTimestamp("fecha_maxima_pago").toLocalDateTime();
         String estadoDePagoBd = resultSet.getString("estado");
 
+        EstadoDePago estadoDePago = null;
         Optional<Map<String, EstadoDePago>> optionalEstadoDePago = Stream.of(mapingEstados).filter(e -> e.containsKey(estadoDePagoBd)).findFirst();
-        EstadoDePago estadoDePago = Objects.requireNonNull(optionalEstadoDePago.get().get(estadoDePagoBd));
+        if (optionalEstadoDePago.isPresent()){
+            estadoDePago = Objects.requireNonNull(optionalEstadoDePago.get().get(estadoDePagoBd));
+        }
 
 
         return new DtoMatricula(id, valor, recargo, estadoDePago, fechaCreacion,fechaLimitePagoSinRecargo, fechaMaximaPago, programa, usuarioMatricula);
