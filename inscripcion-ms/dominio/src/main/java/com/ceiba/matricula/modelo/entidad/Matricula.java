@@ -103,14 +103,15 @@ public class Matricula {
         int diasASumar = 1;         //Empieza en 1 porque los dias empiezan a contar al siguiente dia habil desde la fecha de inscripcion
         DayOfWeek dia;
 
-        if (esDiaNoHabil(fecha) || FRIDAY.toString().equals(fecha.getDayOfWeek().toString()) ){
+        if (esDiaNoHabil(fecha)){
             dia = fecha.getDayOfWeek();
-            if (FRIDAY.toString().equals(dia.toString())){
-                diasASumar = 3;
-            }
-            else if(SATURDAY.toString().equals(dia.toString())){
+            if(SATURDAY.toString().equals(dia.toString())){
                 diasASumar = 2;
             }
+        }
+
+        if (FRIDAY.toString().equals(fecha.getDayOfWeek().toString())){
+            diasASumar = 3;
         }
 
         while (diasDemas < diasParaPagarPrograma){
