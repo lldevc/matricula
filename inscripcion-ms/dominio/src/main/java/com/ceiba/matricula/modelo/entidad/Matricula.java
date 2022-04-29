@@ -57,8 +57,8 @@ public class Matricula {
         this.recargo = false;
         this.estadoDePago = EstadoDePago.PENDIENTE;
         this.fechaCreacion = LocalDateTime.now();
-        this.fechaLimitePagoSinRecargo = calcularFechaLimitePago(fechaCreacion, programa.getDiasParaRecargo());
-        this.fechaMaximaPago = calcularFechaLimitePago(fechaCreacion, programa.getDiasParaRecargo() + 5);
+        this.fechaLimitePagoSinRecargo = calcularFechaDePago(fechaCreacion, programa.getDiasParaRecargo());
+        this.fechaMaximaPago = calcularFechaDePago(fechaCreacion, programa.getDiasParaRecargo() + 5);
     }
 
     public Matricula(Long id, Double valor, boolean recargo, EstadoDePago estadoDePago, LocalDateTime fechaCreacion, LocalDateTime fechaLimitePagoSinRecargo, LocalDateTime fechaMaximaPago, Programa programa, UsuarioMatricula usuarioMatricula) {
@@ -89,7 +89,7 @@ public class Matricula {
         this.valor = valor;
     }
 
-    private LocalDateTime calcularFechaLimitePago(LocalDateTime fechaBase, Integer diasParaPagarPrograma) {
+    public static LocalDateTime calcularFechaDePago(LocalDateTime fechaBase, Integer diasParaPagarPrograma) {
         int anio = fechaBase.getYear();
         int mes = fechaBase.getMonthValue();
         int diaMes = fechaBase.getDayOfMonth();
@@ -97,7 +97,7 @@ public class Matricula {
         return fechaCalculada.plusDays(diasASumar(fechaCalculada, diasParaPagarPrograma));
     }
 
-    private Integer diasASumar (LocalDateTime fecha, int diasParaPagarPrograma) {
+    private static Integer diasASumar (LocalDateTime fecha, int diasParaPagarPrograma) {
         List<String> diasHabiles = Arrays.asList("MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY");
         int diasDemas = 1;
         int diasASumar = 1;         //Empieza en 1 porque los dias empiezan a contar al siguiente dia habil desde la fecha de inscripcion
@@ -125,7 +125,7 @@ public class Matricula {
         return diasASumar;
     }
 
-    private boolean esDiaNoHabil(LocalDateTime fecha){
+    private static boolean esDiaNoHabil(LocalDateTime fecha){
         DayOfWeek dia = fecha.getDayOfWeek();
         return "SATURDAY".equals(dia.toString()) || "SUNDAY".equals(dia.toString());
     }
