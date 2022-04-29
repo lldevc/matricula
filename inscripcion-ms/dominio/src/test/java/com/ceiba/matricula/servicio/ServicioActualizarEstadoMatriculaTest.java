@@ -74,5 +74,6 @@ public class ServicioActualizarEstadoMatriculaTest {
         servicioActualizarEstadoMatricula.ejecutar(matriculas);
         //assert
         Mockito.verify(repositorioMatricula,Mockito.times(1)).actualizar(Mockito.any());
+        Mockito.verify(repositorioUsuarioMatricula,Mockito.times(0)).actualizar(Mockito.any());
     }
 }
