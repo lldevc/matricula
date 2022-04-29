@@ -38,6 +38,27 @@ public class ServicioActualizarEstadoMatriculaTest {
     }
 
     @Test
+    @DisplayName("No Deberia hacer nada ya que la matricula esta pagada")
+    void noDeberiaHacerNadaYaQueLaMatriculaEstaPagada() {
+        // arrange
+        Matricula matricula1 = new MatriculaTestDataBuilder(programa, usuario)
+                .conId(2L)
+                .conFechaCreacion(LocalDateTime.of(2022, 4, 3,0,0))
+                .conFechaLimitePagoConRecargo(LocalDateTime.of(2022, 4, 8,23,59))
+                .conFechaMaximaPago(LocalDateTime.of(2022, 4, 15,23,59))
+                .conEstadoDePago(EstadoDePago.PAGADA)
+                .build();
+        List<DtoMatricula> matriculas = new ArrayList<>();
+        matriculas.add(MapperMatricula.mapperMatriculaToDtoMatricula(matricula1));
+        ServicioActualizarEstadoMatricula servicioActualizarEstadoMatricula = new ServicioActualizarEstadoMatricula(repositorioMatricula, repositorioUsuarioMatricula);
+        // act
+        servicioActualizarEstadoMatricula.ejecutar(matriculas);
+        //assert
+        Mockito.verify(repositorioMatricula,Mockito.times(0)).actualizar(Mockito.any());
+        Mockito.verify(repositorioUsuarioMatricula,Mockito.times(0)).actualizar(Mockito.any());
+    }
+
+    @Test
     @DisplayName("Deberia actualizar correctamente el repositorio de matricula y usuario")
     void deberiaActualizarCorrectamenteRepositorioMatriculaYUsuarioMatricula() {
         // arrange
