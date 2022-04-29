@@ -4,7 +4,7 @@ import com.ceiba.matricula.modelo.dto.DtoMatricula;
 import com.ceiba.matricula.modelo.entidad.EstadoDePago;
 import com.ceiba.matricula.modelo.entidad.Matricula;
 
-public class MapperMatricula {
+public final class MapperMatricula {
 
     public static DtoMatricula mapperMatriculaToDtoMatricula(Matricula matricula) {
         return new DtoMatricula(
