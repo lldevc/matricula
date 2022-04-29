@@ -73,6 +73,93 @@ public class MatriculaTest {
     }
 
     @Test
+    @DisplayName("Deberia crear correctamente la matricula con las fechas correctas pagando en dia domingo")
+    void deberiaCrearCorrectamenteLaMatriculaConLasFechasCorrectasConPagoDiaDomingo() {
+        // arrange
+        Programa programa = new ProgramaTestDataBuilder().build();
+        UsuarioMatricula usuario = new UsuarioMatriculaTestDataBuilder().build();
+        LocalDateTime fechaCreacion = LocalDateTime.of(2022, 4, 3, 8,0);
+        LocalDateTime fechaLimitePagoConRecargo = MatriculaTestDataBuilder.calcularFechaLimitePago(fechaCreacion, programa.getDiasParaRecargo());
+        LocalDateTime fechaMaximaPago = MatriculaTestDataBuilder.calcularFechaLimitePago(fechaCreacion, programa.getDiasParaRecargo() + 5);
+        LocalDateTime fechaLimitePagoSinRecargoEsperada = LocalDateTime.of(2022, 4, 8, 23,59, 59);
+        LocalDateTime fechaMaximaPagoEsperada = LocalDateTime.of(2022, 4, 15, 23,59, 59);
+        //act
+        Matricula matricula = new MatriculaTestDataBuilder(programa, usuario)
+                .conFechaCreacion(fechaCreacion)
+                .conFechaLimitePagoConRecargo(fechaLimitePagoConRecargo)
+                .conFechaMaximaPago(fechaMaximaPago)
+                .build();
+        //assert
+        assertEquals(1234, matricula.getId());
+        assertEquals(programa.getPrecio(), matricula.getValor());
+        assertFalse(matricula.isRecargo());
+        assertEquals(EstadoDePago.PENDIENTE, matricula.getEstadoDePago());
+        assertEquals(fechaCreacion, matricula.getFechaCreacion());
+        assertEquals(fechaLimitePagoSinRecargoEsperada, matricula.getFechaLimitePagoSinRecargo());
+        assertEquals(fechaMaximaPagoEsperada, matricula.getFechaMaximaPago());
+        assertEquals(usuario, matricula.getUsuarioMatricula());
+        assertEquals(programa, matricula.getPrograma());
+    }
+
+    @Test
+    @DisplayName("Deberia crear correctamente la matricula con las fechas correctas pagando en dia sabado")
+    void deberiaCrearCorrectamenteLaMatriculaConLasFechasCorrectasConPagoDiaSabado() {
+        // arrange
+        Programa programa = new ProgramaTestDataBuilder().build();
+        UsuarioMatricula usuario = new UsuarioMatriculaTestDataBuilder().build();
+        LocalDateTime fechaCreacion = LocalDateTime.of(2022, 4, 2, 8,0);
+        LocalDateTime fechaLimitePagoConRecargo = MatriculaTestDataBuilder.calcularFechaLimitePago(fechaCreacion, programa.getDiasParaRecargo());
+        LocalDateTime fechaMaximaPago = MatriculaTestDataBuilder.calcularFechaLimitePago(fechaCreacion, programa.getDiasParaRecargo() + 5);
+        LocalDateTime fechaLimitePagoSinRecargoEsperada = LocalDateTime.of(2022, 4, 8, 23,59, 59);
+        LocalDateTime fechaMaximaPagoEsperada = LocalDateTime.of(2022, 4, 15, 23,59, 59);
+        //act
+        Matricula matricula = new MatriculaTestDataBuilder(programa, usuario)
+                .conFechaCreacion(fechaCreacion)
+                .conFechaLimitePagoConRecargo(fechaLimitePagoConRecargo)
+                .conFechaMaximaPago(fechaMaximaPago)
+                .build();
+        //assert
+        assertEquals(1234, matricula.getId());
+        assertEquals(programa.getPrecio(), matricula.getValor());
+        assertFalse(matricula.isRecargo());
+        assertEquals(EstadoDePago.PENDIENTE, matricula.getEstadoDePago());
+        assertEquals(fechaCreacion, matricula.getFechaCreacion());
+        assertEquals(fechaLimitePagoSinRecargoEsperada, matricula.getFechaLimitePagoSinRecargo());
+        assertEquals(fechaMaximaPagoEsperada, matricula.getFechaMaximaPago());
+        assertEquals(usuario, matricula.getUsuarioMatricula());
+        assertEquals(programa, matricula.getPrograma());
+    }
+
+    @Test
+    @DisplayName("Deberia crear correctamente la matricula con las fechas correctas pagando en dia viernes")
+    void deberiaCrearCorrectamenteLaMatriculaConLasFechasCorrectasConPagoDiaViernes() {
+        // arrange
+        Programa programa = new ProgramaTestDataBuilder().build();
+        UsuarioMatricula usuario = new UsuarioMatriculaTestDataBuilder().build();
+        LocalDateTime fechaCreacion = LocalDateTime.of(2022, 4, 1, 8,0);
+        LocalDateTime fechaLimitePagoConRecargo = MatriculaTestDataBuilder.calcularFechaLimitePago(fechaCreacion, programa.getDiasParaRecargo());
+        LocalDateTime fechaMaximaPago = MatriculaTestDataBuilder.calcularFechaLimitePago(fechaCreacion, programa.getDiasParaRecargo() + 5);
+        LocalDateTime fechaLimitePagoSinRecargoEsperada = LocalDateTime.of(2022, 4, 8, 23,59, 59);
+        LocalDateTime fechaMaximaPagoEsperada = LocalDateTime.of(2022, 4, 15, 23,59, 59);
+        //act
+        Matricula matricula = new MatriculaTestDataBuilder(programa, usuario)
+                .conFechaCreacion(fechaCreacion)
+                .conFechaLimitePagoConRecargo(fechaLimitePagoConRecargo)
+                .conFechaMaximaPago(fechaMaximaPago)
+                .build();
+        //assert
+        assertEquals(1234, matricula.getId());
+        assertEquals(programa.getPrecio(), matricula.getValor());
+        assertFalse(matricula.isRecargo());
+        assertEquals(EstadoDePago.PENDIENTE, matricula.getEstadoDePago());
+        assertEquals(fechaCreacion, matricula.getFechaCreacion());
+        assertEquals(fechaLimitePagoSinRecargoEsperada, matricula.getFechaLimitePagoSinRecargo());
+        assertEquals(fechaMaximaPagoEsperada, matricula.getFechaMaximaPago());
+        assertEquals(usuario, matricula.getUsuarioMatricula());
+        assertEquals(programa, matricula.getPrograma());
+    }
+
+    @Test
     void deberiaFallarSinId() {
 
         //Arrange
@@ -195,6 +282,18 @@ public class MatriculaTest {
         BasePrueba.assertThrows(() -> {
                     matriculaTestDataBuilder.build();
                 },
+                ExcepcionValorInvalido.class, "La matricula debe tener un valor positivo");
+    }
+
+    @Test
+    void deberiaFallarAlSetearValorNegativo() {
+
+        //Arrange
+        Programa programa = new ProgramaTestDataBuilder().build();
+        UsuarioMatricula usuario = new UsuarioMatriculaTestDataBuilder().build();
+        MatriculaTestDataBuilder matriculaTestDataBuilder = new MatriculaTestDataBuilder(programa, usuario);
+        //act-assert
+        BasePrueba.assertThrows(() -> matriculaTestDataBuilder.build().setValor(-100000D),
                 ExcepcionValorInvalido.class, "La matricula debe tener un valor positivo");
     }
 

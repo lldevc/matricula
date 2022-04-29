@@ -106,6 +106,11 @@ public class ServicioCrearMatriculaTest {
         Long idMatricula = servicioCrearMatricula.ejecutar(matricula);
         //- assert
         assertEquals(10L,idMatricula);
+        assertEquals(usuario.getNumeroIdentificacion(),dtoUsuarioMatricula.getNumeroIdentificacion());
+        assertEquals(usuario.getNombre(),dtoUsuarioMatricula.getNombre());
+        assertEquals(usuario.getEmail(),dtoUsuarioMatricula.getEmail());
+        assertEquals(usuario.getCiudad(),dtoUsuarioMatricula.getCiudad());
+        assertEquals(usuario.getDireccion(),dtoUsuarioMatricula.getDireccion());
         Mockito.verify(repositorioMatricula, Mockito.times(1)).crear(matricula);
     }
 }
