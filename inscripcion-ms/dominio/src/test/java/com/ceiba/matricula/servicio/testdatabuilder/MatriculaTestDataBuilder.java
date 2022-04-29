@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.time.DayOfWeek.FRIDAY;
+import static java.time.DayOfWeek.SATURDAY;
+
 public class MatriculaTestDataBuilder {
 
     private Long id;
@@ -101,15 +104,13 @@ public class MatriculaTestDataBuilder {
         int diasASumar = 1;         //Empieza en 1 porque los dias empiezan a contar al siguiente dia habil desde la fecha de inscripcion
         DayOfWeek dia;
 
-        if (esDiaNoHabil(fecha) || fecha.getDayOfWeek().toString().equals("FRIDAY")){
+        if (esDiaNoHabil(fecha) || FRIDAY.toString().equals(fecha.getDayOfWeek().toString()) ){
             dia = fecha.getDayOfWeek();
-            if ((dia.toString().equals("SUNDAY"))){
-                diasASumar = 1;
-            }
-            else if((dia.toString().equals("SATURDAY"))){
-                diasASumar = 2;
-            } else {
+            if (FRIDAY.toString().equals(dia.toString())){
                 diasASumar = 3;
+            }
+            else if(SATURDAY.toString().equals(dia.toString())){
+                diasASumar = 2;
             }
         }
 
@@ -126,6 +127,6 @@ public class MatriculaTestDataBuilder {
 
     public static boolean esDiaNoHabil(LocalDateTime fecha){
         DayOfWeek dia = fecha.getDayOfWeek();
-        return dia.toString().equals("SATURDAY") || dia.toString().equals("SUNDAY");
+        return "SATURDAY".equals(dia.toString()) || "SUNDAY".equals(dia.toString());
     }
 }
