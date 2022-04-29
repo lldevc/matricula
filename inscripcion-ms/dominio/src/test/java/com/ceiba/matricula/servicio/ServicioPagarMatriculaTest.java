@@ -15,7 +15,10 @@ import com.ceiba.matricula.servicio.testdatabuilder.UsuarioMatriculaTestDataBuil
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.mockito.*;
+
+import static com.ceiba.matricula.modelo.entidad.EstadoDePago.PAGADA;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ServicioPagarMatriculaTest {
 
@@ -61,10 +64,14 @@ public class ServicioPagarMatriculaTest {
     void deberiaActualizarCorrectamenteElRepositorio() {
         // arrange
         Mockito.when(repositorioMatricula.existePorId(Mockito.anyLong())).thenReturn(true);
-        ServicioActualizarMatricula servicioActualizarMatricula = new ServicioActualizarMatricula(repositorioMatricula);
+        ServicioPagarMatricula servicioPagarMatricula = new ServicioPagarMatricula(repositorioMatricula);
+        ArgumentCaptor<Matricula> matriculaArgumentCaptor = ArgumentCaptor.forClass(Matricula.class);
         // act
-        servicioActualizarMatricula.ejecutar(matricula);
+        servicioPagarMatricula.ejecutar(matricula, tarjetaDeCredito);
         //assert
+        Mockito.verify(repositorioMatricula).actualizar(matriculaArgumentCaptor.capture());
         Mockito.verify(repositorioMatricula,Mockito.times(1)).actualizar(matricula);
+        Matricula matriculaActualizada = matriculaArgumentCaptor.getValue();
+        assertEquals(PAGADA, matriculaActualizada.getEstadoDePago());
     }
 }

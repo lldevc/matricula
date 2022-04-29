@@ -12,11 +12,15 @@ import com.ceiba.matricula.util.MapperMatricula;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ceiba.matricula.modelo.entidad.EstadoDePago.VENCIDA;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ServicioActualizarEstadoMatriculaTest {
 
@@ -71,11 +75,20 @@ public class ServicioActualizarEstadoMatriculaTest {
         List<DtoMatricula> matriculas = new ArrayList<>();
         matriculas.add(MapperMatricula.mapperMatriculaToDtoMatricula(matricula1));
         ServicioActualizarEstadoMatricula servicioActualizarEstadoMatricula = new ServicioActualizarEstadoMatricula(repositorioMatricula, repositorioUsuarioMatricula);
+        ArgumentCaptor<Matricula> matriculaArgumentCaptor = ArgumentCaptor.forClass(Matricula.class);
+        ArgumentCaptor<UsuarioMatricula> usuarioMatriculaArgumentCaptor = ArgumentCaptor.forClass(UsuarioMatricula.class);
         // act
         servicioActualizarEstadoMatricula.ejecutar(matriculas);
         //assert
-        Mockito.verify(repositorioMatricula,Mockito.times(1)).actualizar(Mockito.any());
         Mockito.verify(repositorioUsuarioMatricula,Mockito.times(1)).actualizar(Mockito.any());
+        Mockito.verify(repositorioUsuarioMatricula).actualizar(usuarioMatriculaArgumentCaptor.capture());
+        UsuarioMatricula usuarioMatriculaActualizado = usuarioMatriculaArgumentCaptor.getValue();
+        assertNotNull(usuarioMatriculaActualizado.getFechaSancion());
+
+        Mockito.verify(repositorioMatricula,Mockito.times(1)).actualizar(Mockito.any());
+        Mockito.verify(repositorioMatricula).actualizar(matriculaArgumentCaptor.capture());
+        Matricula matriculaActualizada = matriculaArgumentCaptor.getValue();
+        assertEquals(VENCIDA, matriculaActualizada.getEstadoDePago());
     }
 
     @Test
@@ -88,13 +101,19 @@ public class ServicioActualizarEstadoMatriculaTest {
                 .conFechaLimitePagoConRecargo(MatriculaTestDataBuilder.calcularFechaLimitePago(LocalDateTime.now().minusDays(9), programa.getDiasParaRecargo()))
                 .conFechaMaximaPago(MatriculaTestDataBuilder.calcularFechaLimitePago(LocalDateTime.now().minusDays(9), programa.getDiasParaRecargo() + 5))
                 .build();
+        Double nuevoValor = programa.calcularRecargo() + programa.getPrecio();
         List<DtoMatricula> matriculas = new ArrayList<>();
         matriculas.add(MapperMatricula.mapperMatriculaToDtoMatricula(matricula1));
         ServicioActualizarEstadoMatricula servicioActualizarEstadoMatricula = new ServicioActualizarEstadoMatricula(repositorioMatricula, repositorioUsuarioMatricula);
+        ArgumentCaptor<Matricula> matriculaArgumentCaptor = ArgumentCaptor.forClass(Matricula.class);
         // act
         servicioActualizarEstadoMatricula.ejecutar(matriculas);
         //assert
         Mockito.verify(repositorioMatricula,Mockito.times(1)).actualizar(Mockito.any());
         Mockito.verify(repositorioUsuarioMatricula,Mockito.times(0)).actualizar(Mockito.any());
+        Mockito.verify(repositorioMatricula).actualizar(matriculaArgumentCaptor.capture());
+        Matricula matriculaActualizada = matriculaArgumentCaptor.getValue();
+        assertTrue(matriculaActualizada.isRecargo());
+        assertEquals(nuevoValor ,matriculaActualizada.getValor());
     }
 }
