@@ -12,6 +12,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -61,6 +64,7 @@ class ConsultaControladorUsuarioMatriculaTest {
     @DisplayName("Deberia listar usuario por id")
     void deberiaListarUsuariosPorId() throws Exception {
         // arrange
+        String fechaSacion = LocalDateTime.of(2022,10,18,0,0,0).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         // act - assert
         mocMvc.perform(get("/usuarios-matricula/1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -70,7 +74,8 @@ class ConsultaControladorUsuarioMatriculaTest {
                 .andExpect(jsonPath("$.nombre", is("test")))
                 .andExpect(jsonPath("$.email", is("test@test.com")))
                 .andExpect(jsonPath("$.ciudad", is("testCiudad")))
-                .andExpect(jsonPath("$.direccion", is("testDireccion")));
+                .andExpect(jsonPath("$.direccion", is("testDireccion")))
+                .andExpect(jsonPath("$.fechaSancion", is(fechaSacion)));
 
     }
 

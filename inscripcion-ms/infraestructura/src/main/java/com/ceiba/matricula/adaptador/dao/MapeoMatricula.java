@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -51,11 +52,9 @@ public class MapeoMatricula implements RowMapper<DtoMatricula>, MapperResult {
         LocalDateTime fechaMaximaPago = resultSet.getTimestamp("fecha_maxima_pago").toLocalDateTime();
         String estadoDePagoBd = resultSet.getString("estado");
 
-        EstadoDePago estadoDePago = null;
         Optional<Map<String, EstadoDePago>> optionalEstadoDePago = Stream.of(mapingEstados).filter(e -> e.containsKey(estadoDePagoBd)).findFirst();
-        if (optionalEstadoDePago.isPresent()){
-            estadoDePago = optionalEstadoDePago.get().get(estadoDePagoBd);
-        }
+        EstadoDePago estadoDePago = Objects.requireNonNull(optionalEstadoDePago.get().get(estadoDePagoBd));
+
 
         return new DtoMatricula(id, valor, recargo, estadoDePago, fechaCreacion,fechaLimitePagoSinRecargo, fechaMaximaPago, programa, usuarioMatricula);
     }

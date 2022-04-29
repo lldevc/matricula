@@ -1,4 +1,4 @@
-INSERT INTO usuario(id, nombre, numero_identificacion, email, ciudad, direccion, fecha_sancion) VALUES(1, 'test', 1111, 'test@test.com', 'testCiudad', 'testDireccion', null);
+INSERT INTO usuario(id, nombre, numero_identificacion, email, ciudad, direccion, fecha_sancion) VALUES(1, 'test', 1111, 'test@test.com', 'testCiudad', 'testDireccion', '2022-10-18');
 INSERT INTO usuario(id, nombre, numero_identificacion, email, ciudad, direccion, fecha_sancion) VALUES(2, 'test2', 1112, 'test2@test.com', 'testCiudad2', 'testDireccion2', null);
 INSERT INTO usuario(id, nombre, numero_identificacion, email, ciudad, direccion, fecha_sancion) VALUES(3, 'test3', 1113, 'test3@test.com', 'testCiudad3', 'testDireccion3', null);
 
