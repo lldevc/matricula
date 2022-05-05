@@ -4,7 +4,6 @@ import com.ceiba.ComandoRespuesta;
 import com.ceiba.matricula.comando.ComandoCrearMatricula;
 import com.ceiba.matricula.comando.ComandoMatricula;
 import com.ceiba.matricula.consulta.manejador.*;
-import com.ceiba.matricula.cron.CronMatricula;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
