@@ -22,4 +22,4 @@ spring:
 
 cron:
    expression:
-      matricula: 0 * * * * *
+      matricula: 0 */15 * * * *
