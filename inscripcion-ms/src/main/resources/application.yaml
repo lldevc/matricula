@@ -21,4 +21,5 @@ spring:
          poolName: pool
 
 cron:
-   expression: 0 * * * * *
+   expression:
+      matricula: 0 */60 * * * *

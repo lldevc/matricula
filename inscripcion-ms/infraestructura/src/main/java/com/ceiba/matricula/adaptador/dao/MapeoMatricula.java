@@ -49,7 +49,7 @@ public class MapeoMatricula implements RowMapper<DtoMatricula>, MapperResult {
         LocalDateTime fechaMaximaPago = resultSet.getTimestamp("fecha_maxima_pago").toLocalDateTime();
         String estadoDePagoBd = resultSet.getString("estado");
         EstadoDePago estadoDePago = mapingEstados.get(estadoDePagoBd);
-        
+
         return new DtoMatricula(id, valor, recargo, estadoDePago, fechaCreacion,fechaLimitePagoSinRecargo, fechaMaximaPago, programa, usuarioMatricula);
     }
 

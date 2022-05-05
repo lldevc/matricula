@@ -23,7 +23,7 @@ public class CronMatricula {
         this.manejadorActualizarEstadoMatricula = manejadorActualizarEstadoMatricula;
     }
 
-    @Scheduled(cron = "${cron.expression}")
+    @Scheduled(cron = "${cron.expression.matricula}")
     public void cronActualizarEstadoDeMatriculas(){
         LOGGER.info(INICIO_ACTUALIZACION);
         manejadorActualizarEstadoMatricula.ejecutar();
