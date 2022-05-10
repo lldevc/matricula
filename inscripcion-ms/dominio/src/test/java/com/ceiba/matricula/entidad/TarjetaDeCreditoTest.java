@@ -33,7 +33,7 @@ public class TarjetaDeCreditoTest {
         BasePrueba.assertThrows(() -> {
                     tarjetaDeCredito.build();
                 },
-                ExcepcionValorObligatorio.class, "Debe ingresar un numero de targeta");
+                ExcepcionValorObligatorio.class, "Debe ingresar un numero de tarjeta");
     }
 
     @Test
@@ -83,7 +83,7 @@ public class TarjetaDeCreditoTest {
         BasePrueba.assertThrows(() -> {
                     tarjetaDeCredito.build();
                 },
-                ExcepcionValorInvalido.class, "El numero de la tageta ingresado es invalido");
+                ExcepcionValorInvalido.class, "El numero de la tarjeta ingresado es invalido");
     }
 
     @Test
@@ -104,6 +104,18 @@ public class TarjetaDeCreditoTest {
 
         //Arrange
         TarjetaDeCredioTestDataBuilder tarjetaDeCredito = new TarjetaDeCredioTestDataBuilder().conMesVecimiento("1");
+        //act-assert
+        BasePrueba.assertThrows(() -> {
+                    tarjetaDeCredito.build();
+                },
+                ExcepcionValorInvalido.class, "El mes ingresaso es invalido");
+    }
+
+    @Test
+    void deberiaFallarConMesDeVenvimientoInvalido2() {
+
+        //Arrange
+        TarjetaDeCredioTestDataBuilder tarjetaDeCredito = new TarjetaDeCredioTestDataBuilder().conMesVecimiento("00");
         //act-assert
         BasePrueba.assertThrows(() -> {
                     tarjetaDeCredito.build();

@@ -3,10 +3,7 @@ package com.ceiba.matricula.servicio;
 import com.ceiba.BasePrueba;
 import com.ceiba.dominio.excepcion.ExcepcionDuplicidad;
 import com.ceiba.dominio.excepcion.ExcepcionValorInvalido;
-import com.ceiba.matricula.modelo.entidad.Matricula;
-import com.ceiba.matricula.modelo.entidad.Programa;
-import com.ceiba.matricula.modelo.entidad.TarjetaDeCredito;
-import com.ceiba.matricula.modelo.entidad.UsuarioMatricula;
+import com.ceiba.matricula.modelo.entidad.*;
 import com.ceiba.matricula.puerto.repositorio.RepositorioMatricula;
 import com.ceiba.matricula.servicio.testdatabuilder.MatriculaTestDataBuilder;
 import com.ceiba.matricula.servicio.testdatabuilder.ProgramaTestDataBuilder;
@@ -45,6 +42,17 @@ public class ServicioPagarMatriculaTest {
         ServicioPagarMatricula servicioPagarMatricula = new ServicioPagarMatricula(repositorioMatricula);
         // act - assert
         BasePrueba.assertThrows(() -> servicioPagarMatricula.ejecutar(matricula, tarjetaDeCredito), ExcepcionDuplicidad.class,"La matricula no existe en el sistema");
+    }
+
+    @Test
+    @DisplayName("Deberia validar que la matricula esta vencida")
+    void deberiaValidarQueLaMatriculaEstaVencida() {
+        // arrange
+        Matricula matriculaVencida = new MatriculaTestDataBuilder(programa, usuario).conId(1L).conEstadoDePago(EstadoDePago.VENCIDA).build();
+        Mockito.when(repositorioMatricula.existePorId(Mockito.anyLong())).thenReturn(true);
+        ServicioPagarMatricula servicioPagarMatricula = new ServicioPagarMatricula(repositorioMatricula);
+        // act - assert
+        BasePrueba.assertThrows(() -> servicioPagarMatricula.ejecutar(matriculaVencida, tarjetaDeCredito), ExcepcionDuplicidad.class,"La matricula esta vencida");
     }
 
     @Test

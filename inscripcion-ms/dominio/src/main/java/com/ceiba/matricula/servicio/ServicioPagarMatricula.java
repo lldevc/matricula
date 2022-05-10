@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class ServicioPagarMatricula {
 
     private static final String LA_MATRICULA_NO_EXISTE_EN_EL_SISTEMA = "La matricula no existe en el sistema";
+    private static final String LA_MATRICULA_ESTA_VENCIDA = "La matricula esta vencida";
     private static final String LA_TARJETA_INGRESADA_ESTA_VENCIDA = "La tarjeta ingreasada para el pago de la matricula está vencida";
 
     private final RepositorioMatricula repositorioMatricula;
@@ -22,6 +23,7 @@ public class ServicioPagarMatricula {
 
     public void ejecutar(Matricula matricula, TarjetaDeCredito tarjetaDeCredito) {
         validarExistenciaPrevia(matricula);
+        validarMatriculaVencida(matricula);
         validarFechaDeVencimientoDeTargetaCredito(tarjetaDeCredito);
         matricula.setEstadoDePago(EstadoDePago.PAGADA);
         this.repositorioMatricula.actualizar(matricula);
@@ -31,6 +33,12 @@ public class ServicioPagarMatricula {
         boolean existe = this.repositorioMatricula.existePorId(matricula.getId());
         if(!existe) {
             throw new ExcepcionDuplicidad(LA_MATRICULA_NO_EXISTE_EN_EL_SISTEMA);
+        }
+    }
+
+    private void validarMatriculaVencida(Matricula matricula) {
+        if(matricula.getEstadoDePago().equals(EstadoDePago.VENCIDA)) {
+            throw new ExcepcionDuplicidad(LA_MATRICULA_ESTA_VENCIDA);
         }
     }
 
